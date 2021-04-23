@@ -75,7 +75,10 @@ const start = () => {
 const viewEmployees = () => {
     const query = 'SELECT * FROM employee';
     connection.query(query, (err, res) => {
-        res.forEach(({ first_name, last_name, role_id, manager_id }) => console.table(['First Name', 'Last Name', 'Role', 'Manager'], [first_name, last_name, role_id, manager_id || 'NULL']));
+        res.forEach(({ first_name, last_name, role_id, manager_id }) => {
+        const values = [`${first_name}`, `${last_name}`, `${role_id}`, `${manager_id}`]
+        console.table(['First Name', 'Last Name', 'Role', 'Manager'], [values])
+    });
         start();
     });
 };
