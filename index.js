@@ -1,8 +1,26 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
 const consoleTable = require('console.table');
-const { type } = require('node:os');
-const { rawListeners } = require('node:process');
+const connection = mysql.createConnection({
+    host: 'localhost',
+  
+    // Your port; if not 3306
+    port: 3306,
+  
+    // Your username
+    user: 'root',
+  
+    // Be sure to update with your own MySQL password!
+    password: 'WorldWideWebster3',
+    database: 'employeesDB',
+  });
+  
+  connection.connect((err) => {
+    if (err) throw err;
+    start();
+  });
+// const { type } = require('node:os');
+// const { rawListeners } = require('node:process');
 
 // Build Inquirer questions
 
@@ -32,102 +50,92 @@ const start = () => {
                 case 'view all employees':
                     viewEmployees();
                     break;
-                case 'view all employees by role':
-                    employeesByRole();
-                    break;
-                case 'view all employees by department':
-                    employeesByDept();
-                    break;
-                case 'add employee':
-                    addEmployee();
-                    break;
-                case 'add role':
-                    addRole();
-                    break;
-                case 'add department':
-                    addDept();
-                    break;
+                // case 'view all employees by role':
+                //     employeesByRole();
+                //     break;
+                // case 'view all employees by department':
+                //     employeesByDept();
+                //     break;
+                // case 'add employee':
+                //     addEmployee();
+                //     break;
+                // case 'add role':
+                //     addRole();
+                //     break;
+                // case 'add department':
+                //     addDept();
+                //     break;
                 default:
                     console.log(`Invalid action: ${answer.start}`);
                     break;
             }
         });
 };
-
-const start = () => {
-    inquirer.prompt([
-
-    ])
-        .then((answers) => {
-
-        });
-};
-
+// build logic for JOINS based on responses
 const viewEmployees = () => {
-    inquirer.prompt([
-
-    ])
-        .then((answers) => {
-
-        });
+    const query = 'SELECT * FROM employee';
+    connection.query(query, (err, res) => {
+        res.forEach(({ first_name, last_name, role_id, manager_id }) => console.table(['First Name', 'Last Name', 'Role', 'Manager'], [first_name, last_name, role_id, manager_id || 'NULL']));
+        start();
+    });
 };
 
-const employeesByRole = () => {
-    inquirer.prompt([
+// const employeesByRole = () => {
+//     inquirer.prompt([
 
-    ])
-        .then((answers) => {
+//     ])
+//         .then((answers) => {
 
-        });
-};
-const employeesByDept = () => {
-    inquirer.prompt([
+//         });
+// };
+// const employeesByDept = () => {
+//     inquirer.prompt([
 
-    ])
-        .then((answers) => {
+//     ])
+//         .then((answers) => {
 
-        });
-};
-const addEmployee = () => {
-    inquirer.prompt([
+//         });
+// };
+// const addEmployee = () => {
+//     inquirer.prompt([
 
-    ])
-        .then((answers) => {
+//     ])
+//         .then((answers) => {
 
-        });
-};
-const addRole = () => {
-    inquirer.prompt([
+//         });
+// };
+// const addRole = () => {
+//     inquirer.prompt([
 
-    ])
-        .then((answers) => {
+//     ])
+//         .then((answers) => {
 
-        });
-};
-const addDept = () => {
-    inquirer.prompt([
+//         });
+// };
+// const addDept = () => {
+//     inquirer.prompt([
 
-    ])
-        .then((answers) => {
+//     ])
+//         .then((answers) => {
 
-        });
-};
-const updateRole = () => {
-    inquirer.prompt([
+//         });
+// };
+// const updateRole = () => {
+//     inquirer.prompt([
 
-    ])
-        .then((answers) => {
+//     ])
+//         .then((answers) => {
 
-        });
-};
-const updateManager = () => {
-    inquirer.prompt([
+//         });
+// };
+// const updateManager = () => {
+//     inquirer.prompt([
 
-    ])
-        .then((answers) => {
+//     ])
+//         .then((answers) => {
 
-        });
-};
+//         });
+// };
 /*
 const deleteEmployee = () => {
     inquirer.prompt([
@@ -161,21 +169,6 @@ const deptBudget = () => {
 
     });
 };
-
-
-view all employees
-view all employees by role
-view all employees by department
-add employee
-add role
-add department
-update employee role
-update employee manager
-delete employee
-delete role
-delete department
-view department budget
-
 */
-// build logic for JOINS based on responses
-// figure out how to print to the console using console.table
+
+
