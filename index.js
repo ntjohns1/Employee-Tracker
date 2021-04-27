@@ -3,22 +3,22 @@ const mysql = require('mysql2');
 const consoleTable = require('console.table');
 const connection = mysql.createConnection({
     host: 'localhost',
-  
+
     // Your port; if not 3306
     port: 3306,
-  
+
     // Your username
     user: 'root',
-  
+
     // Be sure to update with your own MySQL password!
     password: 'WorldWideWebster3',
     database: 'employeesDB',
-  });
-  
-  connection.connect((err) => {
+});
+
+connection.connect((err) => {
     if (err) throw err;
     start();
-  });
+});
 // const { type } = require('node:os');
 // const { rawListeners } = require('node:process');
 
@@ -50,9 +50,9 @@ const start = () => {
                 case 'view all employees':
                     viewEmployees();
                     break;
-                // case 'view all employees by role':
-                //     employeesByRole();
-                //     break;
+                case 'view all employees by role':
+                    employeesByRole();
+                    break;
                 // case 'view all employees by department':
                 //     employeesByDept();
                 //     break;
@@ -75,22 +75,38 @@ const start = () => {
 const viewEmployees = () => {
     const query = 'SELECT * FROM employee';
     connection.query(query, (err, res) => {
-        res.forEach(({ first_name, last_name, role_id, manager_id }) => {
-        const values = [`${first_name}`, `${last_name}`, `${role_id}`, `${manager_id}`]
-        console.table(['First Name', 'Last Name', 'Role', 'Manager'], [values])
+        console.table(res);
     });
-        start();
+    start();
+};
+
+const employeesByRole = () => {
+    connection.query('SELECT * FROM role', (err, res) => {
+        if (err) throw err;
+        inquirer.prompt(
+            {
+                name: 'select_role',
+                type: 'rawlist',
+                message: 'What role do you want to list employees by?',
+                choices() {
+                    const choiceArray = [];
+                    res.forEach(({ title }) => {
+                        choiceArray.push(title);
+                    });
+                    return choiceArray;
+                },
+            })
+            .then((answer) => {
+                // take answer from prompt compare title to id in role table
+                // return all employees with that employee.role_id
+                const query = 'SELECT id, first_name, last_name FROM role JOIN employee ON role WHERE role.id = role_id';
+                connection.query(query, (err, res) => {
+                    console.table(res);
+                });
+            });
     });
 };
 
-// const employeesByRole = () => {
-//     inquirer.prompt([
-
-//     ])
-//         .then((answers) => {
-
-//         });
-// };
 // const employeesByDept = () => {
 //     inquirer.prompt([
 
