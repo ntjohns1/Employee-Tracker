@@ -97,9 +97,10 @@ const employeesByRole = () => {
                 },
             })
             .then((answer) => {
+                console.log(answer);
                 // take answer from prompt compare title to id in role table
                 // return all employees with that employee.role_id
-                const query = 'SELECT id, first_name, last_name FROM role JOIN employee ON role WHERE role.id = role_id';
+                const query = 'SELECT first_name, last_name, role_ id FROM employees JOIN role ON employees WHERE employee.role_id = role.id';
                 connection.query(query, (err, res) => {
                     console.table(res);
                 });
