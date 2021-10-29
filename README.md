@@ -57,7 +57,7 @@ npm start
       
 
 ## Contributing
-'Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.'
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## Questions
 For questions, please open an issue in the GitHub repo: [https://github.com/ntjohns1/Employee-Tracker]
