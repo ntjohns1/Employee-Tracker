@@ -1,5 +1,9 @@
 
 # Employee Tracker
+
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+
 ## Description
 A CMS solution for managing a company's employees using node, inquirer, and MySQL. This is a command line application that enables the user to view and manage the departments, roles, and employees in a company. 
 
@@ -40,8 +44,6 @@ npm start
 ```
 
 ## License  
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-
 
       Copyright 2021 Nelson Johns
 
